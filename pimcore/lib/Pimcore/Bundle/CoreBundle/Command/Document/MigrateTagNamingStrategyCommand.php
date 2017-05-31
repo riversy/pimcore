@@ -210,19 +210,6 @@ class MigrateTagNamingStrategyCommand extends AbstractCommand
         $host = $mainDomain;
         $path = $document->getRealFullPath();
 
-        $site = Frontend::getSiteForDocument($document);
-        if ($site) {
-            $host = $site->getMainDomain();
-            $path = preg_replace('@^' . $site->getRootPath() . '@', '', $path);
-
-            var_dump($site->getRootId());
-            var_dump($document->getId());
-
-            if ($site->getRootId() === $document->getId()) {
-                $path = '/';
-            }
-        }
-
         $uri     = sprintf('http://%s%s', $host, $path);
         $request = Request::create($uri, 'GET', [
             'pimcore_preview' => true
